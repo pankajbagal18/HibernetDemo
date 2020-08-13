@@ -15,6 +15,7 @@ public class Main {
         System.out.println("Please select(1/2/3/4) : \n1. Insert\n2. Read\n3. Update\n 4.Delete\n");
         int choice = Integer.parseInt(br.readLine());
         int testId;
+        Person person = null;
         switch (choice)
         {
             case 1:
@@ -24,14 +25,19 @@ public class Main {
                 break;
 
             case 2:
-                System.out.println("Enter id delete the record : ");
+                System.out.println("Enter id read the record : ");
                 testId = Integer.parseInt(br.readLine());
-                Person person =  getPersonRecord(testId);
+                person =  getPersonRecord(testId);
                 System.out.println(person);
                 break;
 
             case 3:
-
+                System.out.println("Enter id to update email");
+                testId = Integer.parseInt(br.readLine());
+                person = getPersonRecord(testId);
+                System.out.println("Record is found : "+person+" Please enter new email");
+                String newEmail = br.readLine();
+                updateEmail(testId,newEmail);
                 break;
 
             case 4:
@@ -40,6 +46,15 @@ public class Main {
                 deleteRecord(testId);
                 break;
         }
+    }
+
+    private static void updateEmail(int testId, String newEmail) {
+        Session session = getSession();
+        session.beginTransaction();
+        Person person = session.get(Person.class,testId);
+        person.setEmail(newEmail);
+        session.getTransaction().commit();
+        session.close();
     }
 
     private static void saveRecord(Person person) {
