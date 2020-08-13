@@ -28,6 +28,16 @@ public class Person {
 //        this.email = email;
 //    }
 
+    @Override
+    public String toString() {
+        return "Person{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
+
     public Person(String firstName, String lastName, String email) {
         //this.id = id;
         this.firstName = firstName;

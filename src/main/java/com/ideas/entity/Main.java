@@ -12,8 +12,9 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        System.out.println("Please select(1/2/3/4) : \n1. Insert\n2. Update\n3. Update\n 4.Delete\n");
+        System.out.println("Please select(1/2/3/4) : \n1. Insert\n2. Read\n3. Update\n 4.Delete\n");
         int choice = Integer.parseInt(br.readLine());
+        int testId;
         switch (choice)
         {
             case 1:
@@ -23,15 +24,19 @@ public class Main {
                 break;
 
             case 2:
-
+                System.out.println("Enter id delete the record : ");
+                testId = Integer.parseInt(br.readLine());
+                Person person =  getPersonRecord(testId);
+                System.out.println(person);
                 break;
 
             case 3:
+
                 break;
 
             case 4:
                 System.out.println("Enter id delete the record : ");
-                int testId = Integer.parseInt(br.readLine());
+                testId = Integer.parseInt(br.readLine());
                 deleteRecord(testId);
                 break;
         }
@@ -45,13 +50,23 @@ public class Main {
         session.getTransaction().commit();
         session.close();
     }
-    private static void deleteRecord(Integer testId) {
+
+    private static void deleteRecord(int testId) {
         Session session = getSession();
         session.beginTransaction();
         Person person = (Person) session.load(Person.class,testId);
         session.delete(person);
         session.getTransaction().commit();
         session.close();
+    }
+
+    private static Person getPersonRecord(int testId)
+    {
+        Session session = getSession();
+        session.beginTransaction();
+        Person person = (Person) session.load(Person.class,testId);
+        session.getTransaction().commit();
+        return person;
     }
 
     private static Session getSession()
