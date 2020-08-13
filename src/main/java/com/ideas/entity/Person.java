@@ -3,9 +3,11 @@ package com.ideas.entity;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "Person")
 public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "Id")
     private int id;
     @Column(name = "firstName")
     private String firstName;
