@@ -23,22 +23,39 @@ public class Main {
                 break;
 
             case 2:
+
                 break;
 
             case 3:
                 break;
 
             case 4:
+                System.out.println("Enter id delete the record : ");
+                int testId = Integer.parseInt(br.readLine());
+                deleteRecord(testId);
                 break;
         }
     }
 
     private static void saveRecord(Person person) {
-        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
-        Session session = sessionFactory.openSession();
+        //SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+        Session session = getSession();
         session.beginTransaction();
         session.save(person);
         session.getTransaction().commit();
         session.close();
+    }
+    private static void deleteRecord(Integer testId) {
+        Session session = getSession();
+        session.beginTransaction();
+        Person person = (Person) session.load(Person.class,testId);
+        session.delete(person);
+        session.getTransaction().commit();
+        session.close();
+    }
+
+    private static Session getSession()
+    {
+        return new Configuration().configure().buildSessionFactory().openSession();
     }
 }
